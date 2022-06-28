@@ -4,7 +4,7 @@ from PIL import Image, ImageFilter, ImageTk
 
 class App():
     def __init__(self):
-        
+
 
 def creating_image(a,w,h,x,y):
     global photoimg #keeping a reference
