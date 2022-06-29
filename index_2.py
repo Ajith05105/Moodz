@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import messagebox
 from PIL import ImageTk, Image
 import pymysql
 import datetime
@@ -22,9 +21,8 @@ class appscreen:
         self.emoji_bar = Image.open('img/emoji_bar.png')
         self.emoji_bar_resized = self.emoji_bar.resize((560, 300))
         self.new_emoji_bar = ImageTk.PhotoImage(self.emoji_bar_resized)
-        img_emoji_bar = Label(self.root, image= self.new_emoji_bar)
+        img_emoji_bar = Label(self.root, image=self.new_emoji_bar)
         img_emoji_bar.place(x=0, y=390)
-
 
         # calendar icon
         self.calendar_img = Image.open('img/img_1.png')
@@ -68,10 +66,10 @@ class appscreen:
         img_awful_emoji.place(x=335, y=0)
 
         emoi_dictionary = {1: self.new_great_emoji,
-                            2: self.new_happy_emoji,
-                            3: self.new_meh_emoji,
-                            4: self.new_sad_emoji,
-                            5: self.new_awful_emoji}
+                           2: self.new_happy_emoji,
+                           3: self.new_meh_emoji,
+                           4: self.new_sad_emoji,
+                           5: self.new_awful_emoji}
 
         label_1 = Label(
             self.root,
@@ -80,10 +78,6 @@ class appscreen:
             fg="#ffb772",
             bg="white", )
         label_1.place(x=120, y=50)
-
-        from datetime import date
-
-        # provide month number
 
         now = datetime.datetime.now()
         month = str(now.month)
@@ -105,7 +99,7 @@ class appscreen:
 
     def login_page(self):
         root.destroy()
-        import login_page
+        import login_page_4
 
 
 root = Tk()
