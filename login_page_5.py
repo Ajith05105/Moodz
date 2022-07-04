@@ -20,7 +20,17 @@ class Login:
 
         self.root.resizable(False, False)
 
+        self.images_list=[] # this list keeps a reference of the images
+
         self.loginform()
+
+    def creating_image(self, imgLoc, h, w, x, y):
+        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
+        self.photoimg = ImageTk.PhotoImage(self.original)
+        label = Label(root, image = self.photoimg,bd=0)
+        label.place(x=x,y=y)
+        self.images_list.append(self.photoimg)
+        return label
 
     def loginform(self):
 
@@ -43,26 +53,12 @@ class Login:
         logo = Label(self.root, image=self.logo, bd='0').place(x=15, y=-15)
 
         # entry box for username
-
-        self.entry_img = Image.open('img/entry_img.png')
-        self.entry_img_resized = self.entry_img.resize((320, 50))
-        self.new_entry_img = ImageTk.PhotoImage(self.entry_img_resized)
-        new_entry_img = Label(frame_input, image=self.new_entry_img, bd=0)
-        new_entry_img.place(x=20, y=138)
+        self.entry_img = self.creating_image('entry_img',50,320,50,290)
 
         # entry box for password
+        self.entry_img_2 = self.creating_image('entry_img',50,320,50,390)
 
-        self.entry_img_2 = Image.open('img/entry_img_2.png')
-        self.entry_img_resized_2 = self.entry_img_2.resize((320, 50))
-        self.new_entry_img_2 = ImageTk.PhotoImage(self.entry_img_resized_2)
-        new_entry_img_2 = Label(frame_input, image=self.new_entry_img_2, bd=0)
-        new_entry_img_2.place(x=20, y=240)
 
-        # yellow side bar with emojis
-
-        self.side_bar = Image.open('img/side_bar_register_page.png')
-        self.side_bar_resized = self.side_bar.resize((310, 750))
-        self.new_side_bar = ImageTk.PhotoImage(self.side_bar_resized)
 
         # image for the login button
 
@@ -72,12 +68,7 @@ class Login:
 
         # label for the side bar
 
-        label1 = Label(
-            Frame_login,
-            image=self.new_side_bar
-        )
-
-        label1.place(x=390, y=0)
+        self.side_bar = self.creating_image("side_bar_register_page",750,310,390,0)
 
         # label for the username text
 
@@ -94,10 +85,10 @@ class Login:
         # entry field for the username
 
         self.username = Entry(
-            frame_input, font=("times new roman", 15,), bg="white", bd=0
+            self.root, font=("times new roman", 15,), bg="white", bd=0
         )
 
-        self.username.place(x=30, y=145, width=300, height=33)
+        self.username.place(x=60, y=297, width=300, height=33)
 
         # label for password text
 
@@ -114,10 +105,10 @@ class Login:
         # entry field for the password
 
         self.password = Entry(
-            frame_input, font=("times new roman", 15, "bold"), bg="white", bd=0
+            self.root, font=("times new roman", 15, "bold"), bg="white", bd=0
         )
 
-        self.password.place(x=30, y=245, width=300, height=35)
+        self.password.place(x=60, y=396, width=300, height=35)
 
         # the login button which is linked to login function
 
@@ -133,7 +124,7 @@ class Login:
 
         btn2.place(x=20, y=300)
 
-        # If the user is not registerred, this button would direct them back to register page.
+        # If the user is not registered, this button would direct them back to register page.
 
         btn3 = Button(
             frame_input,
