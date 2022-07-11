@@ -33,15 +33,6 @@ class Register:
 
 
     def Register(self):
-        def creating_image(a, w, h, x, y):
-            global photoimg  # keeping a reference
-
-            self.original = Image.open(a).resize((w, h), Image.ANTIALIAS)  # calling it all in one line
-            self.photoimg = ImageTk.PhotoImage(self.original)
-            self.canvas = Label(self.root, image=self.photoimg, bg='white')
-
-            self.canvas.place(x=x, y=y)
-            return self.canvas
 
         self.logo = ImageTk.PhotoImage(file="img/register_logo.png")
 
@@ -168,7 +159,7 @@ class Register:
                 cur = con.cursor()
 
                 cur.execute(
-                    "select * from register where emailid=%s", self.entry3.get()
+                    "select * from master_register where emailid=%s", self.entry3.get()
                 )
 
                 row = cur.fetchone()
@@ -186,21 +177,22 @@ class Register:
                     self.entry1.focus()
 
                 else:
-
                     self.password = bytes(self.entry2.get(),"utf-8")
                     self.hashedPW = bcrypt.hashpw(self.password,bcrypt.gensalt())
                     cur.execute(
-                        "insert into register (username,emailid,password) values(%s,%s,%s)",
+                        "insert into master_register (username,emailid,password) values(%s,%s,%s)",
                         (
                             self.entry1.get(),
                             self.entry3.get(),
                             self.hashedPW,
-
-
-
                         ),
                     )
 
+                    cur.execute(
+                        f"CREATE TABLE user_table_{self.entry1.get()}"
+                        f" (emoji_ID INT, date Date, time Time, UserID INT,"
+                        f"FOREIGN KEY(UserID)  REFERENCES master_register(UserId))"
+                    )
 
                     con.commit()
 
