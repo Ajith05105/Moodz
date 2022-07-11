@@ -1,36 +1,28 @@
 from tkinter import *
-from PIL import ImageTk,Image
+from PIL import ImageTk, Image
 from tkinter import messagebox
 import pymysql
 import bcrypt
 
 
-
-
-
-
-
 class Register:
 
-    def __init__(self,root):
+    def __init__(self, root):
         self.root = root
         self.root.title("register page")
         self.root.geometry('650x750+500+0')
         self.root['bg'] = 'white'
-        self.root.resizable(False,False)
+        self.root.resizable(False, False)
         self.images_list = []
         self.Register()
 
-    def creating_image(self, imgLoc, h,w, x, y):
+    def creating_image(self, imgLoc, h, w, x, y):
         self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
         self.photoimg = ImageTk.PhotoImage(self.original)
-        self.label = Label(self.root, image = self.photoimg,bd=0)
-        self.label.place(x=x,y=y)
+        self.label = Label(self.root, image=self.photoimg, bd=0)
+        self.label.place(x=x, y=y)
         self.images_list.append(self.photoimg)
         return self.label
-
-
-
 
     def Register(self):
 
@@ -38,15 +30,15 @@ class Register:
 
         logo = Label(self.root, image=self.logo, bd='0').place(x=15, y=-15)
 
-        self.side_bar = self.creating_image('side_bar_register_page',750,310,390,0)
+        self.side_bar = self.creating_image('side_bar_register_page', 750, 310, 390, 0)
 
-        self.entry_img = self.creating_image('entry_img',50, 320,55,360)
+        self.entry_img = self.creating_image('entry_img', 50, 320, 55, 360)
 
-        self.entry_img_2 = self.creating_image('entry_img',50, 320,55,460)
+        self.entry_img_2 = self.creating_image('entry_img', 50, 320, 55, 460)
 
-        self.entry_img_3 = self.creating_image('entry_img',50, 320,55,542)
+        self.entry_img_3 = self.creating_image('entry_img', 50, 320, 55, 542)
 
-        self.entry_img_4 =self.creating_image('entry_img',50, 320,55,270)
+        self.entry_img_4 = self.creating_image('entry_img', 50, 320, 55, 270)
 
         label2 = Label(
             self.root,
@@ -54,16 +46,12 @@ class Register:
             font=("Bauhaus 93", 12),
             fg="black",
             bg="white",
-
         )
-
         label2.place(x=55, y=335)
 
         self.entry1 = Entry(
             self.root, font=("times new roman", 14, "bold"), bg="white", bd=0
-
         )
-
         self.entry1.place(x=68, y=368, width=300, height=30)
 
         label3 = Label(
@@ -79,7 +67,6 @@ class Register:
         self.entry2 = Entry(
             self.root, font=("times new roman", 15, "bold"), bg="white", bd=0,
         )
-
         self.entry2.place(x=67, y=469.5, width=300, height=30)
 
         label4 = Label(
@@ -89,7 +76,6 @@ class Register:
             fg="black",
             bg="white",
         )
-
         label4.place(x=55, y=245)
 
         self.entry3 = Entry(
@@ -123,7 +109,7 @@ class Register:
         register_button.place(x='100', y='590')
         btn3 = Button(
             self.root,
-            command = self.login_page,
+            command=self.login_page,
             text="Already Registered? Login",
             cursor="hand2",
             font=("calibri", 10),
@@ -133,7 +119,6 @@ class Register:
         )
 
         btn3.place(x=140, y=670)
-
 
     def register(self):
 
@@ -177,8 +162,8 @@ class Register:
                     self.entry1.focus()
 
                 else:
-                    self.password = bytes(self.entry2.get(),"utf-8")
-                    self.hashedPW = bcrypt.hashpw(self.password,bcrypt.gensalt())
+                    self.password = bytes(self.entry2.get(), "utf-8")
+                    self.hashedPW = bcrypt.hashpw(self.password, bcrypt.gensalt())
                     cur.execute(
                         "insert into master_register (username,emailid,password) values(%s,%s,%s)",
                         (
@@ -205,14 +190,11 @@ class Register:
                     self.regclear()
                     self.login_page()
 
-
             except Exception as es:
 
                 messagebox.showerror(
                     "Error", f"Error due to:{str(es)}", parent=self.root
                 )
-
-
 
         else:
 
@@ -221,8 +203,6 @@ class Register:
                 "Password and Confirm Password Should Be Same",
                 parent=self.root,
             )
-
-
 
     def regclear(self):
         self.entry1.delete(0, END)
