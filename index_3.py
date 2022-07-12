@@ -1,6 +1,6 @@
+from login_page_5 import Login as ln
 from tkinter import *
 from PIL import ImageTk, Image
-from login_page_5 import *
 import pymysql
 import datetime
 
@@ -12,6 +12,7 @@ class appscreen:
         self.root.geometry('550x750+500+0')
         self.root.resizable(False, False)
         self.root['bg'] = 'white'
+        self.images_list = []
         self.appscreen()
 
     def appscreen(self):
@@ -19,23 +20,15 @@ class appscreen:
         emoji_frame.place(y=210, x=60)
 
         # emoji bar
-        self.emoji_bar = Image.open('img/emoji_bar.png')
-        self.emoji_bar_resized = self.emoji_bar.resize((560, 300))
-        self.new_emoji_bar = ImageTk.PhotoImage(self.emoji_bar_resized)
-        img_emoji_bar = Label(self.root, image=self.new_emoji_bar)
-        img_emoji_bar.place(x=0, y=390)
+        ln.creating_image(self, 'emoji_bar', 300, 560, 0, 390)
 
         # calendar icon
-        self.calendar_img = Image.open('img/img_1.png')
-        self.calendar_img_resized = self.calendar_img.resize((40, 40))
-        self.new_calendar_img = ImageTk.PhotoImage(self.calendar_img_resized)
-        img_calendar_img = Label(self.root, image=self.new_calendar_img, bd=0, bg='white')
-        img_calendar_img.place(x=110, y=122)
+        ln.creating_image(self, 'img_1', 40, 40, 110, 122)
         # feeling great emoji
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
         self.new_great_emoji = ImageTk.PhotoImage(self.great_emoji_resized)
-        img_great_emoji = Button(emoji_frame, image=self.new_great_emoji, bd=0, bg= 'white')
+        img_great_emoji = Button(emoji_frame, image=self.new_great_emoji, bd=0, bg='white')
         img_great_emoji.place(x=0, y=0)
 
         # feeling happy emoji
@@ -56,7 +49,7 @@ class appscreen:
         self.sad_emoji = Image.open('img/sad_emoji.png')
         self.sad_emoji_resized = self.sad_emoji.resize((75, 70))
         self.new_sad_emoji = ImageTk.PhotoImage(self.sad_emoji_resized)
-        img_sad_emoji = Button(emoji_frame, image=self.new_sad_emoji, bd=0,bg='white')
+        img_sad_emoji = Button(emoji_frame, image=self.new_sad_emoji, bd=0, bg='white')
         img_sad_emoji.place(x=250, y=0)
 
         # feeling awful emoji
