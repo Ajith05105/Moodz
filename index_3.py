@@ -1,6 +1,7 @@
 from login_page_5 import Login as ln
 from tkinter import *
 from PIL import ImageTk, Image
+from tkinter import messagebox
 import pymysql
 import datetime
 
@@ -13,7 +14,11 @@ class appscreen:
         self.root.resizable(False, False)
         self.root['bg'] = 'white'
         self.images_list = []
+        self.x = 0
         self.appscreen()
+
+    def make_something(self, value):
+        self.x = value
 
     def appscreen(self):
         emoji_frame = LabelFrame(self.root, width=450, height=70, fg='black', bd=0, bg='white')
@@ -28,42 +33,52 @@ class appscreen:
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
         self.new_great_emoji = ImageTk.PhotoImage(self.great_emoji_resized)
-        img_great_emoji = Button(emoji_frame, image=self.new_great_emoji, bd=0, bg='white')
+        img_great_emoji = Button(emoji_frame, image=self.new_great_emoji,
+                                 bd=0, bg='white',
+                                 command=lambda: [self.make_something(1), self.assigning_emoji_values()])
         img_great_emoji.place(x=0, y=0)
 
         # feeling happy emoji
         self.happy_emoji = Image.open('img/happy_emoji.png')
         self.happy_emoji_resized = self.happy_emoji.resize((75, 70))
         self.new_happy_emoji = ImageTk.PhotoImage(self.happy_emoji_resized)
-        img_happy_emoji = Button(emoji_frame, image=self.new_happy_emoji, bd=0, bg='white')
+        img_happy_emoji = Button(emoji_frame, image=self.new_happy_emoji, bd=0,
+                                 bg='white',
+                                 command=lambda: [self.make_something(2),self.assigning_emoji_values()])
         img_happy_emoji.place(x=80, y=0)
 
         # feeling meh emoji
         self.meh_emoji = Image.open('img/meh_emoji.png')
         self.meh_emoji_resized = self.meh_emoji.resize((75, 70))
         self.new_meh_emoji = ImageTk.PhotoImage(self.meh_emoji_resized)
-        img_meh_emoji = Button(emoji_frame, image=self.new_meh_emoji, bd=0, bg='white')
+        img_meh_emoji = Button(emoji_frame, image=self.new_meh_emoji, bd=0, bg='white',
+                               command=lambda: [self.make_something(3),self.assigning_emoji_values()])
         img_meh_emoji.place(x=165, y=0)
 
         # feeling sad emoji
         self.sad_emoji = Image.open('img/sad_emoji.png')
         self.sad_emoji_resized = self.sad_emoji.resize((75, 70))
         self.new_sad_emoji = ImageTk.PhotoImage(self.sad_emoji_resized)
-        img_sad_emoji = Button(emoji_frame, image=self.new_sad_emoji, bd=0, bg='white')
+        img_sad_emoji = Button(emoji_frame,
+                               image=self.new_sad_emoji,
+                               bd=0,
+                               bg='white',
+                               command=lambda: [self.make_something(4),self.assigning_emoji_values()])
         img_sad_emoji.place(x=250, y=0)
 
         # feeling awful emoji
         self.awful_emoji = Image.open('img/awful_emoji.png')
         self.awful_emoji_resized = self.awful_emoji.resize((75, 70))
         self.new_awful_emoji = ImageTk.PhotoImage(self.awful_emoji_resized)
-        img_awful_emoji = Button(emoji_frame, image=self.new_awful_emoji, bd=0, bg='white')
+        img_awful_emoji = Button(emoji_frame, image=self.new_awful_emoji, bd=0, bg='white',
+                                 command=lambda: [self.make_something(5),self.assigning_emoji_values()])
         img_awful_emoji.place(x=335, y=0)
 
-        emoi_dictionary = {1: self.new_great_emoji,
-                           2: self.new_happy_emoji,
-                           3: self.new_meh_emoji,
-                           4: self.new_sad_emoji,
-                           5: self.new_awful_emoji}
+        self.emoi_dictionary = {self.new_great_emoji: 1,
+                                self.new_happy_emoji: 2,
+                                self.new_meh_emoji: 3,
+                                self.new_sad_emoji: 4,
+                                self.new_awful_emoji: 5}
 
         label_1 = Label(
             self.root,
@@ -94,6 +109,33 @@ class appscreen:
     def login_page(self):
         root.destroy()
         import login_page_4
+
+    def assigning_emoji_values(self):
+       print(self.x)
+
+    def emoji_entry(self):
+
+        try:
+            con = pymysql.connect(
+                host="localhost",
+                user="root",
+                password="Ajith@05",
+                database="pythongui",
+            )
+
+            cur = con.cursor()
+            cur.execute(
+                "select * from master_register where "
+            )
+
+
+        except Exception as es:
+
+            messagebox.showerror(
+
+                "Error", f"Error due to:{str(es)}", parent=self.root
+
+            )
 
 
 root = Tk()

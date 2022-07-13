@@ -179,9 +179,6 @@ class Login:
         self.username.delete(0, END)
         self.password.delete(0, END)
 
-    def open(self):
-        self.top = Toplevel(self.root)
-        self.root.mainloop()
 
 
 # running the mainloop if the following condition is true
