@@ -1,4 +1,4 @@
-from login_page_5 import Login as ln
+from login_page_5 import *
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
@@ -6,7 +6,7 @@ import pymysql
 import datetime
 
 
-class appscreen:
+class Appscreen:
     def __init__(self, root):
         self.root = root
         self.root.title("Moodz")
@@ -20,15 +20,16 @@ class appscreen:
     def make_something(self, value):
         self.x = value
 
+
     def appscreen(self):
         emoji_frame = LabelFrame(self.root, width=450, height=70, fg='black', bd=0, bg='white')
         emoji_frame.place(y=210, x=60)
 
         # emoji bar
-        ln.creating_image(self, 'emoji_bar', 300, 560, 0, 390)
+        Login.creating_image(self, 'emoji_bar', 300, 560, 0, 390)
 
         # calendar icon
-        ln.creating_image(self, 'img_1', 40, 40, 110, 122)
+        Login.creating_image(self, 'img_1', 40, 40, 110, 122)
         # feeling great emoji
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
@@ -79,6 +80,7 @@ class appscreen:
                                  self.new_meh_emoji: 3,
                                  self.new_sad_emoji: 4,
                                  self.new_awful_emoji: 5}
+
 
         label_1 = Label(
             self.root,
@@ -148,5 +150,5 @@ class appscreen:
 
 
 root = Tk()
-ob = appscreen(root)
+ob = Appscreen(root)
 root.mainloop()

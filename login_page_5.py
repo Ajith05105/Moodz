@@ -7,21 +7,18 @@ import pymysql
 
 # class for the login form
 class Login:
+    username = 3
 
     def __init__(self, root):
 
         # initializing and modifying the window
 
         self.root = root
-
         self.root.title("Login page")
-
         self.root.geometry("650x750+500+0")
-
         self.root.resizable(False, False)
-
         self.images_list = []  # this list keeps a reference of the images
-
+        Login.username += 1
         self.loginform()
 
     def creating_image(self, imgLoc, h, w, x, y):
@@ -133,7 +130,7 @@ class Login:
 
                 # selecting hashed password that matches with the username entered by the end-user
                 cur.execute(
-                    "SELECT `password` FROM register WHERE `username`=%s",
+                    "SELECT `password` FROM master_register WHERE `username`=%s",
                     (self.username.get()),
                 )
                 row = cur.fetchone()
@@ -172,7 +169,7 @@ class Login:
     @staticmethod
     def home_page():
         root.destroy()
-        import index_2
+        import index_3
 
     # this function clears the entry fields after the login is succesfull
     def loginclear(self):
@@ -180,9 +177,10 @@ class Login:
         self.password.delete(0, END)
 
 
-
 # running the mainloop if the following condition is true
 if __name__ == "__main__":
     root = Tk()
+
     ob = Login(root)
+    print(Login.username)
     root.mainloop()

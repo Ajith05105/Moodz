@@ -217,7 +217,7 @@ class Login:
 
     def sign_up(self):
         root.destroy()
-        import register_page_final
+        import register_page_6
 
     # this function redirects the user to the app
 
