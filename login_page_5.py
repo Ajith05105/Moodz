@@ -7,7 +7,6 @@ import pymysql
 
 # class for the login form
 class Login:
-    username = 3
 
     def __init__(self, root):
 
@@ -18,7 +17,6 @@ class Login:
         self.root.geometry("650x750+500+0")
         self.root.resizable(False, False)
         self.images_list = []  # this list keeps a reference of the images
-        Login.username += 1
         self.loginform()
 
     def creating_image(self, imgLoc, h, w, x, y):
@@ -127,13 +125,21 @@ class Login:
                     database="pythongui",
                 )
                 cur = con.cursor()
+                cursor = con.cursor()
+
+
 
                 # selecting hashed password that matches with the username entered by the end-user
                 cur.execute(
                     "SELECT `password` FROM master_register WHERE `username`=%s",
                     (self.username.get()),
                 )
+                cursor.execute(
+                    "SELECT `UserId` FROM master_register WHERE `username`=%s",
+                    (self.username.get()),
+                )
                 row = cur.fetchone()
+                user_id = cursor.fetchone()
 
                 # hashing the entered plain text and verifying with the password in database
                 if row is None:
@@ -144,6 +150,13 @@ class Login:
                     self.username.focus()
 
                 elif row is not None and bcrypt.checkpw(bytes(self.password.get(), 'utf-8'), bytes(row[0], 'utf-8')):
+                    cur.execute(
+                        "insert into user_logins (username) values(%s)",
+                        (
+                            self.username.get(),
+                        ),
+                    )
+                    con.commit()
                     self.home_page()
                     con.close()
 
@@ -160,14 +173,14 @@ class Login:
                 )
 
     # this function links the login page to register page
-    @staticmethod
-    def sign_up():
+
+    def sign_up(self):
         root.destroy()
-        import register_page_4
+        import register_page_6
 
     # this function redirects the user to the app
-    @staticmethod
-    def home_page():
+
+    def home_page(self):
         root.destroy()
         import index_3
 
@@ -180,7 +193,5 @@ class Login:
 # running the mainloop if the following condition is true
 if __name__ == "__main__":
     root = Tk()
-
     ob = Login(root)
-    print(Login.username)
     root.mainloop()

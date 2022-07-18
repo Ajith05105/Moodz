@@ -173,6 +173,7 @@ class Register:
                         ),
                     )
 
+
                     cur.execute(
                         f"CREATE TABLE user_table_{self.entry1.get()}"
                         f" (emoji_ID INT, date Date, time Time, UserID INT,"

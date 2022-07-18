@@ -1,9 +1,9 @@
 class MyClass:
-    var1 = 1
+    var1 = []
 
     @classmethod
     def update(cls, value):
-        cls.var1 += value
+        cls.var1.append(value)
 
     def __init__(self,value):
         self.value = value

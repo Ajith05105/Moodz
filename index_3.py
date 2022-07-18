@@ -72,7 +72,9 @@ class Appscreen:
         self.awful_emoji_resized = self.awful_emoji.resize((75, 70))
         self.new_awful_emoji = ImageTk.PhotoImage(self.awful_emoji_resized)
         img_awful_emoji = Button(emoji_frame, image=self.new_awful_emoji, bd=0, bg='white',
-                                 command=lambda: [self.make_something(5), self.assigning_emoji_values()])
+                                 command=lambda: [self.make_something(5),
+                                                  self.assigning_emoji_values(),
+                                                  self.emoji_entry_db()])
         img_awful_emoji.place(x=335, y=0)
 
         self.emoji_dictionary = {self.new_great_emoji: 1,
@@ -136,9 +138,13 @@ class Appscreen:
 
             cur = con.cursor()
             cur.execute(
-                "select * from master_register where "
+                "select * from user_logins "
             )
-
+            rows = cur.fetchall()
+            row = rows[len(rows)-1]
+            print(row)
+            con.commit()
+            con.close()
 
         except Exception as es:
 
