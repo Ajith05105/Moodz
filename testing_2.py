@@ -1,13 +1,9 @@
-class MyClass:
-    var1 = []
+import datetime
 
-    @classmethod
-    def update(cls, value):
-        cls.var1.append(value)
+now = datetime.datetime.now()
+month = str(now.month)
+day = now.day
 
-    def __init__(self,value):
-        self.value = value
-        self.update(value)
+print(now.date())
+print(now.time())
 
-a = MyClass(7)
-print (MyClass.var1)

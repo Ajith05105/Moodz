@@ -20,7 +20,6 @@ class Appscreen:
     def make_something(self, value):
         self.x = value
 
-
     def appscreen(self):
         emoji_frame = LabelFrame(self.root, width=450, height=70, fg='black', bd=0, bg='white')
         emoji_frame.place(y=210, x=60)
@@ -74,7 +73,8 @@ class Appscreen:
         img_awful_emoji = Button(emoji_frame, image=self.new_awful_emoji, bd=0, bg='white',
                                  command=lambda: [self.make_something(5),
                                                   self.assigning_emoji_values(),
-                                                  self.fetching_login_info()])
+                                                  self.fetching_login_info(),
+                                                  self.entring_info_into_entry_table()])
         img_awful_emoji.place(x=335, y=0)
 
         self.emoji_dictionary = {self.new_great_emoji: 1,
@@ -82,7 +82,6 @@ class Appscreen:
                                  self.new_meh_emoji: 3,
                                  self.new_sad_emoji: 4,
                                  self.new_awful_emoji: 5}
-
 
         label_1 = Label(
             self.root,
@@ -92,10 +91,10 @@ class Appscreen:
             bg="white", )
         label_1.place(x=120, y=50)
 
-        now = datetime.datetime.now()
-        month = str(now.month)
-        day = now.day
-        current_time = now.strftime("%I:%M %p")
+        self.now = datetime.datetime.now()
+        month = str(self.now.month)
+        day = self.now.day
+        current_time = self.now.strftime("%I:%M %p")
 
         month_num = month
         datetime_object = datetime.datetime.strptime(month_num, "%m")
@@ -142,7 +141,7 @@ class Appscreen:
                 "select * from user_logins "
             )
             rows = cur.fetchall()
-            self.username = rows[len(rows)-1]
+            self.username = rows[len(rows) - 1]
             print(self.username)
 
             cur_2.execute(
@@ -162,7 +161,30 @@ class Appscreen:
 
             )
 
+    def entring_info_into_entry_table(self):
+        try:
+            con = pymysql.connect(
+                host="localhost",
+                user="root",
+                password="Ajith@05",
+                database="pythongui",
+            )
 
+            cur = con.cursor()
+            cur.execute(
+                "insert into  entry_info (emoji_id,entry_date,entry_time,UserId) values (%s,%s,%s,%s)",
+                (self.emoji_entry,self.now.date(),self.now.strftime("%I:%M:%S"),self.user_id),
+            )
+            con.commit()
+            con.close()
+
+        except Exception as es:
+
+            messagebox.showerror(
+
+                "Error", f"Error due to:{str(es)}", parent=self.root
+
+            )
 
 
 root = Tk()

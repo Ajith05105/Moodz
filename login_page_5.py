@@ -139,7 +139,6 @@ class Login:
                     (self.username.get()),
                 )
                 row = cur.fetchone()
-                user_id = cursor.fetchone()
 
                 # hashing the entered plain text and verifying with the password in database
                 if row is None:
