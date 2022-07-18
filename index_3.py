@@ -74,7 +74,7 @@ class Appscreen:
         img_awful_emoji = Button(emoji_frame, image=self.new_awful_emoji, bd=0, bg='white',
                                  command=lambda: [self.make_something(5),
                                                   self.assigning_emoji_values(),
-                                                  self.emoji_entry_db()])
+                                                  self.fetching_login_info()])
         img_awful_emoji.place(x=335, y=0)
 
         self.emoji_dictionary = {self.new_great_emoji: 1,
@@ -127,7 +127,7 @@ class Appscreen:
             self.emoji_entry = self.emoji_dictionary.get(self.new_awful_emoji)
         print(self.emoji_entry)
 
-    def emoji_entry_db(self):
+    def fetching_login_info(self):
         try:
             con = pymysql.connect(
                 host="localhost",
@@ -137,12 +137,20 @@ class Appscreen:
             )
 
             cur = con.cursor()
+            cur_2 = con.cursor()
             cur.execute(
                 "select * from user_logins "
             )
             rows = cur.fetchall()
-            row = rows[len(rows)-1]
-            print(row)
+            self.username = rows[len(rows)-1]
+            print(self.username)
+
+            cur_2.execute(
+                "SELECT `UserId` FROM master_register WHERE `username`=%s",
+                (self.username),
+            )
+            self.user_id = cur_2.fetchone()
+            print(self.user_id)
             con.commit()
             con.close()
 
@@ -153,6 +161,8 @@ class Appscreen:
                 "Error", f"Error due to:{str(es)}", parent=self.root
 
             )
+
+
 
 
 root = Tk()
