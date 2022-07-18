@@ -5,12 +5,12 @@ from PIL import Image, ImageTk
 
 def login_page():
     root.destroy()
-    import login_page_4
+    import login_page_5
 
 
 def sign_up():
     root.destroy()
-    import register_page_4
+    import register_page_5
 
 
 class main_page:

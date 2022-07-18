@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
+from login_page_4 import Login as ln
 import pymysql
 import bcrypt
 
@@ -16,29 +17,21 @@ class Register:
         self.images_list = []
         self.Register()
 
-    def creating_image(self, imgLoc, h, w, x, y):
-        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
-        self.photoimg = ImageTk.PhotoImage(self.original)
-        self.label = Label(self.root, image=self.photoimg, bd=0)
-        self.label.place(x=x, y=y)
-        self.images_list.append(self.photoimg)
-        return self.label
-
     def Register(self):
 
         self.logo = ImageTk.PhotoImage(file="img/register_logo.png")
 
         logo = Label(self.root, image=self.logo, bd='0').place(x=15, y=-15)
 
-        self.side_bar = self.creating_image('side_bar_register_page', 750, 310, 390, 0)
+        self.side_bar = ln.creating_image(self,'side_bar_register_page', 750, 310, 390, 0)
 
-        self.entry_img = self.creating_image('entry_img', 50, 320, 55, 360)
+        self.entry_img = ln.creating_image(self,'entry_img', 50, 320, 55, 360)
 
-        self.entry_img_2 = self.creating_image('entry_img', 50, 320, 55, 460)
+        self.entry_img_2 = ln.creating_image(self,'entry_img', 50, 320, 55, 460)
 
-        self.entry_img_3 = self.creating_image('entry_img', 50, 320, 55, 542)
+        self.entry_img_3 = ln.creating_image(self,'entry_img', 50, 320, 55, 542)
 
-        self.entry_img_4 = self.creating_image('entry_img', 50, 320, 55, 270)
+        self.entry_img_4 = ln.creating_image(self,'entry_img', 50, 320, 55, 270)
 
         label2 = Label(
             self.root,
@@ -46,12 +39,16 @@ class Register:
             font=("Bauhaus 93", 12),
             fg="black",
             bg="white",
+
         )
+
         label2.place(x=55, y=335)
 
         self.entry1 = Entry(
             self.root, font=("times new roman", 14, "bold"), bg="white", bd=0
+
         )
+
         self.entry1.place(x=68, y=368, width=300, height=30)
 
         label3 = Label(
@@ -67,6 +64,7 @@ class Register:
         self.entry2 = Entry(
             self.root, font=("times new roman", 15, "bold"), bg="white", bd=0,
         )
+
         self.entry2.place(x=67, y=469.5, width=300, height=30)
 
         label4 = Label(
@@ -76,6 +74,7 @@ class Register:
             fg="black",
             bg="white",
         )
+
         label4.place(x=55, y=245)
 
         self.entry3 = Entry(
@@ -162,6 +161,7 @@ class Register:
                     self.entry1.focus()
 
                 else:
+
                     self.password = bytes(self.entry2.get(), "utf-8")
                     self.hashedPW = bcrypt.hashpw(self.password, bcrypt.gensalt())
                     cur.execute(
@@ -170,6 +170,7 @@ class Register:
                             self.entry1.get(),
                             self.entry3.get(),
                             self.hashedPW,
+
                         ),
                     )
 
@@ -184,11 +185,14 @@ class Register:
                     self.regclear()
                     self.login_page()
 
+
             except Exception as es:
 
                 messagebox.showerror(
                     "Error", f"Error due to:{str(es)}", parent=self.root
                 )
+
+
 
         else:
 
@@ -209,7 +213,8 @@ class Register:
 
     def login_page(self):
         root.destroy()
-        import login_page_4
+        import login_page_5
+
 
 
 root = Tk()

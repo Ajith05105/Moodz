@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox, Entry
+from login_page_4 import Login as ln
 import bcrypt
 import pymysql
 
@@ -19,13 +20,7 @@ class Login:
         self.images_list = []  # this list keeps a reference of the images
         self.loginform()
 
-    def creating_image(self, imgLoc, h, w, x, y):
-        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
-        self.photoimg = ImageTk.PhotoImage(self.original)
-        label = Label(self.root, image=self.photoimg, bd=0)
-        label.place(x=x, y=y)
-        self.images_list.append(self.photoimg)
-        return label
+
 
     def loginform(self):
         # Widgets on the login form
@@ -39,9 +34,9 @@ class Login:
         logo = Label(self.root, image=self.logo, bd='0')
         logo.place(x=15, y=-15)
         # entry box for username
-        self.entry_img = self.creating_image('entry_img', 50, 320, 50, 290)
+        self.entry_img = ln.creating_image(self,'entry_img', 50, 320, 50, 290)
         # entry box for password
-        self.entry_img_2 = self.creating_image('entry_img', 50, 320, 50, 390)
+        self.entry_img_2 = ln.creating_image(self,'entry_img', 50, 320, 50, 390)
 
         # image for the login button
         self.login_img = Image.open('img/login.png')
@@ -49,7 +44,7 @@ class Login:
         self.new_login_img = ImageTk.PhotoImage(self.login_resized_img)
 
         # label for the side bar
-        self.side_bar = self.creating_image("side_bar_register_page", 750, 310, 390, 0)
+        self.side_bar = ln.creating_image(self,"side_bar_register_page", 750, 310, 390, 0)
 
         # label for the username text
         label2 = Label(
@@ -190,7 +185,8 @@ class Login:
 
 
 # running the mainloop if the following condition is true
-if __name__ == "__main__":
-    root = Tk()
-    ob = Login(root)
-    root.mainloop()
+
+root = Tk()
+ob = Login(root)
+root.mainloop()
+

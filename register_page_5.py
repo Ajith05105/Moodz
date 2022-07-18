@@ -168,7 +168,7 @@ class Register:
                 cur = con.cursor()
 
                 cur.execute(
-                    "select * from register where emailid=%s", self.entry3.get()
+                    "select * from master_register where emailid=%s", self.entry3.get()
                 )
 
                 row = cur.fetchone()
