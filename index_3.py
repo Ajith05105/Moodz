@@ -35,7 +35,11 @@ class Appscreen:
         self.new_great_emoji = ImageTk.PhotoImage(self.great_emoji_resized)
         img_great_emoji = Button(emoji_frame, image=self.new_great_emoji,
                                  bd=0, bg='white',
-                                 command=lambda: [self.make_something(1), self.assigning_emoji_values()])
+                                 command=lambda: [self.make_something(1),
+                                                  self.assigning_emoji_values(),
+                                                  self.fetching_login_info(),
+                                                  self.entering_info_into_entry_table(),
+                                                  self.user_log()])
         img_great_emoji.place(x=0, y=0)
 
         # feeling happy emoji
@@ -44,7 +48,11 @@ class Appscreen:
         self.new_happy_emoji = ImageTk.PhotoImage(self.happy_emoji_resized)
         img_happy_emoji = Button(emoji_frame, image=self.new_happy_emoji, bd=0,
                                  bg='white',
-                                 command=lambda: [self.make_something(2), self.assigning_emoji_values()])
+                                 command=lambda: [self.make_something(2),
+                                                  self.assigning_emoji_values(),
+                                                  self.fetching_login_info(),
+                                                  self.entering_info_into_entry_table(),
+                                                  self.user_log()])
         img_happy_emoji.place(x=80, y=0)
 
         # feeling meh emoji
@@ -52,7 +60,11 @@ class Appscreen:
         self.meh_emoji_resized = self.meh_emoji.resize((75, 70))
         self.new_meh_emoji = ImageTk.PhotoImage(self.meh_emoji_resized)
         img_meh_emoji = Button(emoji_frame, image=self.new_meh_emoji, bd=0, bg='white',
-                               command=lambda: [self.make_something(3), self.assigning_emoji_values()])
+                               command=lambda: [self.make_something(3),
+                                                self.assigning_emoji_values(),
+                                                self.fetching_login_info(),
+                                                self.entering_info_into_entry_table(),
+                                                self.user_log()])
         img_meh_emoji.place(x=165, y=0)
 
         # feeling sad emoji
@@ -63,7 +75,11 @@ class Appscreen:
                                image=self.new_sad_emoji,
                                bd=0,
                                bg='white',
-                               command=lambda: [self.make_something(4), self.assigning_emoji_values()])
+                               command=lambda: [self.make_something(4),
+                                                self.assigning_emoji_values(),
+                                                self.fetching_login_info(),
+                                                self.entering_info_into_entry_table(),
+                                                self.user_log()])
         img_sad_emoji.place(x=250, y=0)
 
         # feeling awful emoji
@@ -74,7 +90,8 @@ class Appscreen:
                                  command=lambda: [self.make_something(5),
                                                   self.assigning_emoji_values(),
                                                   self.fetching_login_info(),
-                                                  self.entring_info_into_entry_table()])
+                                                  self.entering_info_into_entry_table(),
+                                                  self.user_log()])
         img_awful_emoji.place(x=335, y=0)
 
         self.emoji_dictionary = {self.new_great_emoji: 1,
@@ -109,6 +126,7 @@ class Appscreen:
                                 )
         date_time_label.place(x=160, y=125)
 
+    @staticmethod
     def login_page(self):
         root.destroy()
         import login_page_4
@@ -124,7 +142,6 @@ class Appscreen:
             self.emoji_entry = self.emoji_dictionary.get(self.new_sad_emoji)
         if self.x == 5:
             self.emoji_entry = self.emoji_dictionary.get(self.new_awful_emoji)
-        print(self.emoji_entry)
 
     def fetching_login_info(self):
         try:
@@ -142,14 +159,12 @@ class Appscreen:
             )
             rows = cur.fetchall()
             self.username = rows[len(rows) - 1]
-            print(self.username)
 
             cur_2.execute(
                 "SELECT `UserId` FROM master_register WHERE `username`=%s",
                 (self.username),
             )
             self.user_id = cur_2.fetchone()
-            print(self.user_id)
             con.commit()
             con.close()
 
@@ -161,7 +176,11 @@ class Appscreen:
 
             )
 
-    def entring_info_into_entry_table(self):
+    def user_log(self):
+        root.destroy()
+        import user_log_2
+
+    def entering_info_into_entry_table(self):
         try:
             con = pymysql.connect(
                 host="localhost",
@@ -172,8 +191,8 @@ class Appscreen:
 
             cur = con.cursor()
             cur.execute(
-                "insert into  entry_info (emoji_id,entry_date,entry_time,UserId) values (%s,%s,%s,%s)",
-                (self.emoji_entry,self.now.date(),self.now.strftime("%I:%M:%S"),self.user_id),
+                "insert into  entry_info (emoji_id,entry_date,entry_time,UserId,username) values (%s,%s,%s,%s,%s)",
+                (self.emoji_entry, self.now.date(), self.now.strftime("%H:%M:%S"), self.user_id,self.username),
             )
             con.commit()
             con.close()

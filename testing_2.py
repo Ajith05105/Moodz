@@ -1,8 +1,2 @@
-import datetime
-
-now = datetime.datetime.now()
-month = str(now.month)
-day = now.strftime("%A")
-
-print(day)
-
+list = [(1,3),(1,4)]
+print(list[0][0])

@@ -10,7 +10,7 @@ def login_page():
 
 def sign_up():
     root.destroy()
-    import register_page_5
+    import register_page_6
 
 
 class main_page:
