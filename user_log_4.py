@@ -18,6 +18,22 @@ class User_logs:
         self.y = 0
         self.user_logs()
 
+    def creating_button(self, command, imgLoc, h, w, x, y):
+        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
+        self.photoimg = ImageTk.PhotoImage(self.original)
+        button = Button(self.root, image=self.photoimg, bd=0, command=command, highlightthickness=0)
+        button.place(x=x, y=y)
+        self.images_list.append(self.photoimg)
+        return button
+
+    def login_page(self):
+        root.destroy()
+        import login_page_5
+
+    def entry_page(self):
+        root.destroy()
+        import index_3
+
     def fetching_info(self):
         try:
             con = pymysql.connect(
@@ -79,19 +95,19 @@ class User_logs:
                              (self.new_awful_emoji, 'Awful')]
 
         self.rows = self.fetching_info()
-        wrapper1 = LabelFrame(root, highlightbackground='black', bg='light blue', height=90)
+        wrapper1 = LabelFrame(root, bg='#FEDC69', height=100)
+        self.title_img = PhotoImage(file='img/title.png')
         self.title = Label(wrapper1,
-                           text=f'Welcome {self.username} \n These are your entries',
-                           font=("TkMenuFont", 20, 'bold'),
-                           bg='light blue',
-                           fg='black')
-        self.title.place(x=130, y=0)
+                           image=self.title_img,
+                           bd=0
+                           )
+        self.title.place(x=115, y=15)
 
-        wrapper2 = LabelFrame(root, highlightbackground='black', bg='light green')
-        wrapper3 = LabelFrame(root, highlightbackground='black', height=70)
+        wrapper2 = LabelFrame(root, highlightbackground='black')
+        wrapper3 = LabelFrame(root, highlightbackground='black', height=70, bg='#FEDC69')
 
-        mycanvas = Canvas(wrapper2, bg='light green', highlightbackground='light green', height=500, )
-        mycanvas.pack(side=LEFT, fill=X, pady=10)
+        mycanvas = Canvas(wrapper2, bg='#FFFDD0', height=490, width=505)
+        mycanvas.pack(side='left', fill=Y, )
 
         yscrollbar = ttk.Scrollbar(wrapper2, orient="vertical", command=mycanvas.yview)
         yscrollbar.pack(side=RIGHT, fill="y")
@@ -100,14 +116,16 @@ class User_logs:
 
         mycanvas.bind('<Configure>', lambda e: mycanvas.configure(scrollregion=mycanvas.bbox("all")))
 
-        myframe = Frame(mycanvas, bg='light green')
-        mycanvas.create_window((200, 0), window=myframe, anchor="nw")
+        self.myframe = Frame(mycanvas, bg='#FFFDD0')
+        mycanvas.create_window((100, 3), window=self.myframe, anchor="nw")
+
+        self.creating_button(self.login_page, 'entries', 60, 75, 35, 629)
+        self.creating_button('', 'stats', 60, 71, 123, 629)
+        self.creating_button(self.entry_page, "plus", 60, 61, 220, 629)
 
         wrapper1.pack(fill="x", expand="yes", padx=10)
         wrapper2.pack(fill="both", expand="yes", padx=10, )
         wrapper3.pack(fill="x", expand="yes", padx=10, )
-
-        y = 0
 
         for i in self.rows:
             self.y += 1
@@ -115,26 +133,25 @@ class User_logs:
             self.entry_date = str(i[1])
             self.entry_time = str(i[2])
             self.user_id = i[3]
-            y += 20
 
-            tk.Label(myframe,
+            tk.Label(self.myframe,
                      image=self.emoji_images[self.emoji_id][0]
                      ).grid(row=self.y, column=1)
             self.images_list.append(self.emoji_images[self.emoji_id][0])
 
             tk.Label(
-                myframe,
+                self.myframe,
                 text=f' {datetime.datetime.strptime(self.entry_date, "%Y-%m-%d").strftime("%A %d %b")} '
                      f'  {datetime.datetime.strptime(self.entry_time, "%H:%M:%S").strftime("%I:%M %p")}',
-                bg='light green',
+                bg='#FFFDD0',
                 fg="black",
                 borderwidth=3,
                 font=("TkMenuFont", 10)).grid(row=self.y, column=2)
 
-            tk.Label(myframe,
+            tk.Label(self.myframe,
                      text=self.emoji_images[self.emoji_id][1],
                      font=("TkMenuFont", 14, 'bold'),
-                     bg='light green',
+                     bg='#FFFDD0',
                      fg='black', ).grid(column=0, row=self.y, pady=40)
 
 
