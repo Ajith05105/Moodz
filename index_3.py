@@ -183,12 +183,11 @@ class Appscreen:
     def entering_info_into_entry_table(self):
         try:
             con = pymysql.connect(
-                host="localhost",
-                user="root",
-                password="Ajith@05",
-                database="pythongui",
+                host="sql6.freemysqlhosting.net",
+                user="sql6509714",
+                password="XGJALitivY",
+                database="sql6509714",
             )
-
             cur = con.cursor()
             cur.execute(
                 "insert into  entry_info (emoji_id,entry_date,entry_time,UserId,username) values (%s,%s,%s,%s,%s)",

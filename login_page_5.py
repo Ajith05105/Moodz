@@ -114,10 +114,10 @@ class Login:
             try:
                 # establishing a connection with the database
                 con = pymysql.connect(
-                    host="localhost",
-                    user="root",
-                    password="Ajith@05",
-                    database="pythongui",
+                    host="sql6.freemysqlhosting.net",
+                    user="sql6509714",
+                    password="XGJALitivY",
+                    database="sql6509714",
                 )
                 cur = con.cursor()
                 cursor = con.cursor()

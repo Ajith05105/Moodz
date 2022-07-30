@@ -132,12 +132,11 @@ class Register:
 
         elif self.entry2.get() == self.entry4.get():
             try:
-
                 con = pymysql.connect(
-                    host="localhost",
-                    user="root",
-                    password="Ajith@05",
-                    database="pythongui",
+                    host="sql6.freemysqlhosting.net",
+                    user="sql6509714",
+                    password="XGJALitivY",
+                    database="sql6509714",
                 )
 
                 cur = con.cursor()

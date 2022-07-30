@@ -15,6 +15,7 @@ class User_logs:
         self.root.geometry('550x700+500+0')  # geometry of the window
         self.root['bg'] = 'white'  # background colour of the window
         self.images_list = []
+        self.root.resizable = (False, False)
         self.y = 0
         self.user_logs()
 
@@ -37,10 +38,10 @@ class User_logs:
     def fetching_info(self):
         try:
             con = pymysql.connect(
-                host="localhost",
-                user="root",
-                password="Ajith@05",
-                database="pythongui",
+                host="sql6.freemysqlhosting.net",
+                user="sql6509714",
+                password="XGJALitivY",
+                database="sql6509714",
             )
 
             cur = con.cursor()
@@ -119,9 +120,11 @@ class User_logs:
         self.myframe = Frame(mycanvas, bg='#FFFDD0')
         mycanvas.create_window((100, 3), window=self.myframe, anchor="nw")
 
-        self.creating_button(self.login_page, 'entries', 60, 75, 35, 629)
-        self.creating_button('', 'stats', 60, 71, 123, 629)
-        self.creating_button(self.entry_page, "plus", 60, 61, 220, 629)
+        self.creating_button('', 'entries', 60, 75, 35, 629)
+        self.creating_button('', 'stats', 60, 71, 138, 629)
+        self.creating_button(self.entry_page, "plus", 60, 61, 245, 629)
+        self.creating_button('', "calendar", 60, 75, 340, 629)
+        self.creating_button(self.login_page, 'sign_out', 60, 75, 435, 626)
 
         wrapper1.pack(fill="x", expand="yes", padx=10)
         wrapper2.pack(fill="both", expand="yes", padx=10, )
