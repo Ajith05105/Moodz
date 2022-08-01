@@ -1,53 +1,41 @@
-from login_page_4 import *
 import tkinter as tk
-from PIL import ImageTk, Image
-from tkinter import messagebox, ttk
 import pymysql
+from tkinter import *
+from PIL import Image, ImageTk
+from tkinter import ttk
+import index_4
+import login_page_6
 import datetime
 import random as rd
 
 
 
+class Log(tk.Frame):
 
-
-
-
-
-# creating a class
-class User_logs:
-
-    # initialising the window, and adjusting the size
-
-    def __init__(self, root):  # initialise method
-        self.root = root
-        self.root.title("Moodz")  # title of the window
-        self.root.geometry('550x700+500+0')  # geometry of the window
-        self.root['bg'] = 'white'  # background colour of the window
-        self.images_list = []
-        self.root.resizable = (False, False)
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent, bg='white')
+        self.controller = controller
         self.y = 0
-        self.user_logs()
+        self.images_list = []
+        self.printing_entries()
 
 
-
-    # since there are multiple button in this page, I created this function to avoid duplication
     def creating_button(self, command, imgLoc, h, w, x, y):
         self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
         self.photoimg = ImageTk.PhotoImage(self.original)
-        button = Button(self.root, image=self.photoimg, bd=0, command=command, highlightthickness=0)
+        button = Button(self, image=self.photoimg, bd=0, command=command, highlightthickness=0)
         button.place(x=x, y=y)
         self.images_list.append(self.photoimg)
         return button
 
     # imports to login page
     def login_page(self):
-        root.destroy()
-        import login_page_5
+        self.controller.show_frame(login_page_6.Login)
+
 
     # imports to entry_page
     def entry_page(self):
-        root.destroy()
-        import index_3
+        self.controller.show_frame(index_4.home_page)
 
     # this function fetches all the entries from the user
     def fetching_info(self):
@@ -67,9 +55,9 @@ class User_logs:
                 "select * from user_logins"
             )
             # This fetches all rows in the user_logins table
-            self.results = cursor.fetchall()
+            results = cursor.fetchall()
             # This identifies the last entry as the current user.
-            self.username = self.results[len(self.results) - 1][0]
+            self.username = results[len(results) - 1]
 
             # this fetches all the entries from the current user from
             # entry info table.
@@ -85,8 +73,14 @@ class User_logs:
         except Exception as es:
             print(f"Error due to:{str(es)}")
 
-    def user_logs(self):
+    def clear_frame(self,frame):
+        for widgets in frame.winfo_children():
+            widgets.destroy()
+
+
+    def printing_entries(self):
         # loading and resizing great_emoji image
+        self.fetching_info()
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
         self.new_great_emoji = ImageTk.PhotoImage(self.great_emoji_resized)
@@ -117,8 +111,8 @@ class User_logs:
                              (self.new_awful_emoji, 'Awful')]
 
         # calling fetching_info, so that i can access self.rows
-        self.rows = self.fetching_info()
-        wrapper1 = LabelFrame(root, bg='#FEDC69', height=100)
+
+        wrapper1 = LabelFrame(self, bg='#FEDC69', height=100)
 
         # loading and placing moodz title in wrapper 1
         self.title_img = PhotoImage(file='img/title.png')
@@ -128,8 +122,8 @@ class User_logs:
                            )
         self.title.place(x=115, y=15)
 
-        wrapper2 = LabelFrame(root, highlightbackground='black')
-        wrapper3 = LabelFrame(root, highlightbackground='black', height=70, bg='#FEDC69')
+        wrapper2 = LabelFrame(self, highlightbackground='black')
+        wrapper3 = LabelFrame(self, highlightbackground='black', height=70, bg='#FEDC69')
 
         # creating a canvas is wrapper 2
         mycanvas = Canvas(wrapper2, bg='#FFFDD0', height=490, width=505)
@@ -157,9 +151,9 @@ class User_logs:
         self.creating_button(self.login_page, 'sign_out', 60, 75, 435, 626)
 
         # packing all the frames
-        wrapper1.pack(fill="x", expand="yes", padx=10)
-        wrapper2.pack(fill="both", expand="yes", padx=10, )
-        wrapper3.pack(fill="x", expand="yes", padx=10, )
+        wrapper1.pack(fill="x", expand=1, padx=10)
+        wrapper2.pack(fill="both", expand=1, padx=10, )
+        wrapper3.pack(fill="x", expand=1, padx=10, )
 
         # looping through all the user entries
         for i in self.rows:
@@ -199,9 +193,3 @@ class User_logs:
                      font=("TkMenuFont", 14, 'bold'),
                      bg='#FFFDD0',
                      fg='black', ).grid(column=0, row=self.y, pady=40)
-
-
-# running the root
-root = Tk()
-ob = User_logs(root)
-root.mainloop()
