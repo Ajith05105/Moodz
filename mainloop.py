@@ -14,6 +14,7 @@ class tkinterApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title_font = tkfont.Font(family = 'Helvetica', size = 18, weight = 'bold', slant = "italic")
 
+
         # creating a container
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
