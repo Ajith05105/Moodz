@@ -18,7 +18,7 @@ class Login:
         self.root.geometry("650x750+500+0")
         self.root.resizable(False, False)
         self.images_list = []  # this list keeps a reference of the images
-        self.loginform()
+        self.loginform() # placing all the widgets
 
 
 
@@ -171,6 +171,7 @@ class Login:
     def sign_up(self):
         root.destroy()
         import register_page_6
+
 
     # this function redirects the user to the app
 

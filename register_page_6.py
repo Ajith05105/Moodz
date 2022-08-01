@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from login_page_4 import Login as ln
+import email_validator
 import pymysql
 import bcrypt
 
@@ -44,12 +45,12 @@ class Register:
 
         label2.place(x=55, y=335)
 
-        self.entry1 = Entry(
+        self.username = Entry(
             self.root, font=("times new roman", 14, "bold"), bg="white", bd=0
 
         )
 
-        self.entry1.place(x=68, y=368, width=300, height=30)
+        self.username.place(x=68, y=368, width=300, height=30)
 
         label3 = Label(
             self.root,
@@ -61,11 +62,11 @@ class Register:
 
         label3.place(x=55, y=425)
 
-        self.entry2 = Entry(
+        self.password = Entry(
             self.root, font=("times new roman", 15, "bold"), bg="white", bd=0,
         )
 
-        self.entry2.place(x=67, y=469.5, width=300, height=30)
+        self.password.place(x=67, y=469.5, width=300, height=30)
 
         label4 = Label(
             self.root,
@@ -77,11 +78,11 @@ class Register:
 
         label4.place(x=55, y=245)
 
-        self.entry3 = Entry(
+        self.email = Entry(
             self.root, font=("times new roman", 15, "bold"), bg="white", bd=0
         )
 
-        self.entry3.place(x=65, y=278, width=300, height=30)
+        self.email.place(x=65, y=278, width=300, height=30)
 
         label5 = Label(
             self.root,
@@ -93,11 +94,11 @@ class Register:
 
         label5.place(x=60, y=515)
 
-        self.entry4 = Entry(
+        self.confirm_pswd = Entry(
             self.root, font=("times new roman", 15, "bold"), bg="white", bd=0
         )
 
-        self.entry4.place(x=65, y=550, width=300, height=30)
+        self.confirm_pswd.place(x=65, y=550, width=300, height=30)
 
         self.register_button = Image.open('img/register_button.png')
         self.register_button_resized = self.register_button.resize((210, 80))
@@ -121,17 +122,20 @@ class Register:
 
     def register(self):
 
+
         if (
-                self.entry1.get() == ""
-                or self.entry2.get() == ""
-                or self.entry3.get() == ""
-                or self.entry4.get() == ""
+                self.username.get() == ""
+                or self.password.get() == ""
+                or self.email.get() == ""
+                or self.confirm_pswd.get() == ""
         ):
 
             messagebox.showerror("Error", "All Fields Are Required", parent=self.root)
 
-        elif self.entry2.get() == self.entry4.get():
+        elif self.password.get() == self.confirm_pswd.get() :
             try:
+                email = email_validator.validate_email(self.email.get()).email
+
                 con = pymysql.connect(
                     host="sql6.freemysqlhosting.net",
                     user="sql6509714",
@@ -142,7 +146,7 @@ class Register:
                 cur = con.cursor()
 
                 cur.execute(
-                    "select * from master_register where emailid=%s", self.entry3.get()
+                    "select * from master_register where emailid=%s", self.email.get()
                 )
 
                 row = cur.fetchone()
@@ -157,17 +161,17 @@ class Register:
 
                     self.regclear()
 
-                    self.entry1.focus()
+                    self.username.focus()
 
                 else:
 
-                    self.password = bytes(self.entry2.get(), "utf-8")
-                    self.hashedPW = bcrypt.hashpw(self.password, bcrypt.gensalt())
+                    self.original_password = bytes(self.password.get(), "utf-8")
+                    self.hashedPW = bcrypt.hashpw(self.original_password, bcrypt.gensalt())
                     cur.execute(
                         "insert into master_register (username,emailid,password) values(%s,%s,%s)",
                         (
-                            self.entry1.get(),
-                            self.entry3.get(),
+                            self.username.get(),
+                            self.email.get(),
                             self.hashedPW,
 
                         ),
@@ -202,13 +206,13 @@ class Register:
             )
 
     def regclear(self):
-        self.entry1.delete(0, END)
+        self.username.delete(0, END)
 
-        self.entry2.delete(0, END)
+        self.password.delete(0, END)
 
-        self.entry3.delete(0, END)
+        self.email.delete(0, END)
 
-        self.entry4.delete(0, END)
+        self.confirm_pswd.delete(0, END)
 
     def login_page(self):
         root.destroy()

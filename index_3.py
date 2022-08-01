@@ -129,7 +129,7 @@ class Appscreen:
     @staticmethod
     def login_page(self):
         root.destroy()
-        import login_page_4
+        import login_page_5
 
     def assigning_emoji_values(self):
         if self.x == 1:
@@ -146,10 +146,10 @@ class Appscreen:
     def fetching_login_info(self):
         try:
             con = pymysql.connect(
-                host="localhost",
-                user="root",
-                password="Ajith@05",
-                database="pythongui",
+                host="sql6.freemysqlhosting.net",
+                user="sql6509714",
+                password="XGJALitivY",
+                database="sql6509714",
             )
 
             cur = con.cursor()

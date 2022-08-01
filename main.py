@@ -49,12 +49,6 @@ class main_page:
         self.login_button.place(x='85', y='535')
 
 
-class sign_up_page:
-
-    def __init__(self, root):
-        self.root = root
-        self.root.title('Moodz')
-
 
 root = Tk()
 obj = main_page(root)
