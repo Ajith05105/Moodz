@@ -1,16 +1,13 @@
-from login_page_4 import *
-import tkinter as tk
-from PIL import ImageTk, Image
-from tkinter import messagebox, ttk
-import pymysql
 import datetime
-import random as rd
+import sys
+import tkinter as tk
+from importlib import reload
+from tkinter import ttk
 
+import pymysql
+from PIL import ImageTk, Image
 
-
-
-
-
+from login_page_4 import *
 
 
 # creating a class
@@ -42,12 +39,22 @@ class User_logs:
     # imports to login page
     def login_page(self):
         root.destroy()
-        import login_page_5
+        modulename = "login_page_5"
+        if modulename not in sys.modules:
+            import login_page_5
+        else:
+            del sys.modules[modulename]
+            import login_page_5
 
-    # imports to entry_page
+
     def entry_page(self):
         root.destroy()
-        import index_3
+        modulename = "index_3"
+        if modulename not in sys.modules:
+            import index_3
+        else:
+            del sys.modules[modulename]
+            import index_3
 
     # this function fetches all the entries from the user
     def fetching_info(self):

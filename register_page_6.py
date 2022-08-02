@@ -5,7 +5,7 @@ from login_page_4 import Login as ln
 import email_validator
 import pymysql
 import bcrypt
-
+import sys
 
 class Register:
 
@@ -216,7 +216,12 @@ class Register:
 
     def login_page(self):
         root.destroy()
-        import login_page_5
+        modulename = "login_page_5"
+        if modulename not in sys.modules:
+            import login_page_5
+        else:
+            del sys.modules[modulename]
+            import login_page_5
 
 
 

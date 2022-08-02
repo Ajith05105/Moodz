@@ -4,6 +4,8 @@ from tkinter import messagebox, Entry
 from login_page_4 import Login as ln
 import bcrypt
 import pymysql
+from importlib import reload
+import sys
 
 
 # class for the login form
@@ -18,9 +20,7 @@ class Login:
         self.root.geometry("650x750+500+0")
         self.root.resizable(False, False)
         self.images_list = []  # this list keeps a reference of the images
-        self.loginform() # placing all the widgets
-
-
+        self.loginform()  # placing all the widgets
 
     def loginform(self):
         # Widgets on the login form
@@ -34,9 +34,9 @@ class Login:
         logo = Label(self.root, image=self.logo, bd='0')
         logo.place(x=15, y=-15)
         # entry box for username
-        self.entry_img = ln.creating_image(self,'entry_img', 50, 320, 50, 290)
+        self.entry_img = ln.creating_image(self, 'entry_img', 50, 320, 50, 290)
         # entry box for password
-        self.entry_img_2 = ln.creating_image(self,'entry_img', 50, 320, 50, 390)
+        self.entry_img_2 = ln.creating_image(self, 'entry_img', 50, 320, 50, 390)
 
         # image for the login button
         self.login_img = Image.open('img/login.png')
@@ -44,7 +44,7 @@ class Login:
         self.new_login_img = ImageTk.PhotoImage(self.login_resized_img)
 
         # label for the side bar
-        self.side_bar = ln.creating_image(self,"side_bar_register_page", 750, 310, 390, 0)
+        self.side_bar = ln.creating_image(self, "side_bar_register_page", 750, 310, 390, 0)
 
         # label for the username text
         label2 = Label(
@@ -122,8 +122,6 @@ class Login:
                 cur = con.cursor()
                 cursor = con.cursor()
 
-
-
                 # selecting hashed password that matches with the username entered by the end-user
                 cur.execute(
                     "SELECT `password` FROM master_register WHERE `username`=%s",
@@ -170,14 +168,23 @@ class Login:
 
     def sign_up(self):
         root.destroy()
-        import register_page_6
-
+        modulename = "register_page_6"
+        if modulename not in sys.modules:
+            import register_page_6
+        else:
+            del sys.modules[modulename]
+            import register_page_6
 
     # this function redirects the user to the app
 
     def home_page(self):
         root.destroy()
-        import index_3
+        modulename = "index_3"
+        if modulename not in sys.modules:
+            import index_3
+        else:
+            del sys.modules[modulename]
+            import index_3
 
     # this function clears the entry fields after the login is succesfull
     def loginclear(self):
@@ -190,4 +197,3 @@ class Login:
 root = Tk()
 ob = Login(root)
 root.mainloop()
-

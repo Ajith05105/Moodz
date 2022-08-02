@@ -4,6 +4,8 @@ from PIL import ImageTk, Image
 from tkinter import messagebox
 import pymysql
 import datetime
+from importlib import reload
+import sys
 
 
 class Appscreen:
@@ -126,10 +128,11 @@ class Appscreen:
                                 )
         date_time_label.place(x=160, y=125)
 
-    @staticmethod
     def login_page(self):
         root.destroy()
         import login_page_5
+        if login_page_5 in sys.modules:
+            reload(login_page_5)
 
     def assigning_emoji_values(self):
         if self.x == 1:
@@ -178,7 +181,13 @@ class Appscreen:
 
     def user_log(self):
         root.destroy()
-        import user_log_4
+        modulename = "user_log_4"
+        if modulename not in sys.modules:
+            import user_log_4
+        else:
+            del sys.modules[modulename]
+            import user_log_4
+
 
     def entering_info_into_entry_table(self):
         try:
@@ -191,7 +200,7 @@ class Appscreen:
             cur = con.cursor()
             cur.execute(
                 "insert into  entry_info (emoji_id,entry_date,entry_time,UserId,username) values (%s,%s,%s,%s,%s)",
-                (self.emoji_entry, self.now.date(), self.now.strftime("%H:%M:%S"), self.user_id,self.username),
+                (self.emoji_entry, self.now.date(), self.now.strftime("%H:%M:%S"), self.user_id, self.username),
             )
             con.commit()
             con.close()

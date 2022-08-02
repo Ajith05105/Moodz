@@ -45,7 +45,6 @@ class home_page(tk.Frame):
                                                   self.assigning_emoji_values(),
                                                   self.fetching_login_info(),
                                                   self.entering_info_into_entry_table(),
-
                                                   self.user_log()])
         img_great_emoji.place(x=0, y=0)
 

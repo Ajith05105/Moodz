@@ -6,6 +6,7 @@ import login_page_6
 import register_page_7
 import index_4
 import user_log_5
+import pymysql
 
 
 
@@ -16,20 +17,11 @@ class tkinterApp(tk.Tk):
         # __init__ function for class Tk
         tk.Tk.__init__(self, *args, **kwargs)
         self.title_font = tkfont.Font(family = 'Helvetica', size = 18, weight = 'bold', slant = "italic")
-
-
-        # creating a container
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
-
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
-
-        # initializing frames to an empty array
         self.frames = {}
-
-        # iterating through a tuple consisting
-        # of the different page layouts
         for F in (main_2.StartPage,
                   login_page_6.Login,
                   register_page_7.Register_page,
@@ -52,6 +44,7 @@ class tkinterApp(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 
 
 # first window frame startpage

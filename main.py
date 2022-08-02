@@ -1,6 +1,8 @@
 
 from tkinter import *
 from PIL import Image, ImageTk
+from importlib import reload
+
 
 
 def login_page():
@@ -11,6 +13,7 @@ def login_page():
 def sign_up():
     root.destroy()
     import register_page_6
+
 
 
 class main_page:

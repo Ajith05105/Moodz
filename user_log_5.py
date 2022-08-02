@@ -6,8 +6,6 @@ from tkinter import ttk
 import index_4
 import login_page_6
 import datetime
-import random as rd
-
 
 
 class Log(tk.Frame):
@@ -31,7 +29,6 @@ class Log(tk.Frame):
     # imports to login page
     def login_page(self):
         self.controller.show_frame(login_page_6.Login)
-
 
     # imports to entry_page
     def entry_page(self):
@@ -73,14 +70,12 @@ class Log(tk.Frame):
         except Exception as es:
             print(f"Error due to:{str(es)}")
 
-    def clear_frame(self,frame):
-        for widgets in frame.winfo_children():
-            widgets.destroy()
 
 
     def printing_entries(self):
         # loading and resizing great_emoji image
         self.fetching_info()
+
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
         self.new_great_emoji = ImageTk.PhotoImage(self.great_emoji_resized)
@@ -109,8 +104,6 @@ class Log(tk.Frame):
         self.emoji_images = [('none', 'none'), (self.new_great_emoji, 'Great'), (self.new_happy_emoji, 'Happy'),
                              (self.new_meh_emoji, 'Meh'), (self.new_sad_emoji, 'Sad'),
                              (self.new_awful_emoji, 'Awful')]
-
-        # calling fetching_info, so that i can access self.rows
 
         wrapper1 = LabelFrame(self, bg='#FEDC69', height=100)
 
@@ -146,7 +139,7 @@ class Log(tk.Frame):
         # using our user defined function to create buttons
         self.creating_button('', 'entries', 60, 75, 35, 629)
         self.creating_button('', 'stats', 60, 71, 138, 629)
-        self.creating_button(self.entry_page, "plus", 60, 61, 245, 629)
+        self.creating_button(lambda : [self.fetching_info(),self.entry_page()], "plus", 60, 61, 245, 629)
         self.creating_button('', "calendar", 60, 75, 340, 629)
         self.creating_button(self.login_page, 'sign_out', 60, 75, 435, 626)
 

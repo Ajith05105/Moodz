@@ -11,7 +11,7 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.controller.title('Moodz')
-        self.controller.resizable(False,False)
+        self.controller.resizable(False, False)
         self.controller.geometry('550x700+500+0')
 
         self.bg = Image.open('img/bg.png')
@@ -23,9 +23,9 @@ class StartPage(tk.Frame):
         self.sign_up = Image.open('img/sign_up.png')
         self.sign_up_resized = self.sign_up.resize((300, 125))
         self.new_sign_up = ImageTk.PhotoImage(self.sign_up_resized)
-        self.sign_up_button = Button(self,image=self.new_sign_up,
+        self.sign_up_button = Button(self, image=self.new_sign_up,
                                      cursor='hand2', bg='white', borderwidth='0',
-                                     command = lambda : controller.show_frame(register_page_7.Register_page))
+                                     command=lambda: controller.show_frame(register_page_7.Register_page))
         self.sign_up_button.place(x='130', y='415')
 
         # login button
@@ -33,16 +33,14 @@ class StartPage(tk.Frame):
         self.login = Image.open('img/login.png')
         self.login_resized = self.login.resize((410, 140))
         self.new_login = ImageTk.PhotoImage(self.login_resized)
-        self.login_button = Button(self,image=self.new_login, cursor='hand2'
+        self.login_button = Button(self, image=self.new_login, cursor='hand2'
                                    , bg='white', borderwidth='0',
-                                   command= lambda : controller.show_frame(login_page_6.Login)
+                                   command=lambda: controller.show_frame(login_page_6.Login)
                                    )
         self.login_button.place(x='85', y='535')
 
         # label of frame Layout 2
-        label = ttk.Label(self, text="Startpage", font = controller.title_font)
+        label = ttk.Label(self, text="Startpage", font=controller.title_font)
 
         # putting the grid in its place by using
         # grid
-
-
