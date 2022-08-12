@@ -4,7 +4,6 @@ from tkinter import messagebox, Entry
 from login_page_4 import Login as ln
 import bcrypt
 import pymysql
-from importlib import reload
 import sys
 
 
@@ -36,7 +35,8 @@ class Login:
         # entry box for username
         self.entry_img = ln.creating_image(self, 'entry_img', 50, 320, 50, 290)
         # entry box for password
-        self.entry_img_2 = ln.creating_image(self, 'entry_img', 50, 320, 50, 390)
+        self.entry_img_2 = ln.creating_image(self, 'entry_img', 50, 320, 50,
+                                             390)
 
         # image for the login button
         self.login_img = Image.open('img/login.png')
@@ -44,7 +44,8 @@ class Login:
         self.new_login_img = ImageTk.PhotoImage(self.login_resized_img)
 
         # label for the side bar
-        self.side_bar = ln.creating_image(self, "side_bar_register_page", 750, 310, 390, 0)
+        self.side_bar = ln.creating_image(self, "side_bar_register_page",
+                                          750, 310, 390, 0)
 
         # label for the username text
         label2 = Label(
@@ -74,7 +75,11 @@ class Login:
 
         # entry field for the password
         self.password = Entry(
-            self.root, font=("times new roman", 15, "bold"), bg="white", bd=0
+            self.root,
+            font=("times new roman", 15, "bold"),
+            show="*",
+            bg="white",
+            bd=0
         )
 
         self.password.place(x=60, y=396, width=300, height=35)
@@ -90,7 +95,8 @@ class Login:
         )
         btn2.place(x=20, y=300)
 
-        # If the user is not registered, this button would direct them back to register page.
+        # If the user is not registered,
+        # this button would direct them back to register page.
         btn3 = Button(
             frame_input,
             command=self.sign_up,
@@ -103,13 +109,15 @@ class Login:
         )
         btn3.place(x=85, y=415)
 
-    # login function that verifies the password , username and directs to the app
+    # login function that verifies the password,username and directs to the app
     def login(self):
         # validating if the user leaves the feild empty
 
         if self.username.get() == "" or self.password.get() == "":
 
-            messagebox.showerror("Error", "All fields are required", parent=self.root)
+            messagebox.showerror("Error",
+                                 "All fields are required",
+                                 parent=self.root)
         else:
             try:
                 # establishing a connection with the database
@@ -122,9 +130,11 @@ class Login:
                 cur = con.cursor()
                 cursor = con.cursor()
 
-                # selecting hashed password that matches with the username entered by the end-user
+                # selecting hashed password that matches
+                # with the username entered by the end-user
                 cur.execute(
-                    "SELECT `password` FROM master_register WHERE `username`=%s",
+                    "SELECT `password` FROM master_register "
+                    "WHERE `username`=%s",
                     (self.username.get()),
                 )
                 cursor.execute(
@@ -133,7 +143,8 @@ class Login:
                 )
                 row = cur.fetchone()
 
-                # hashing the entered plain text and verifying with the password in database
+                # hashing the entered plain text and
+                # verifying with the password in database
                 if row is None:
                     messagebox.showerror(
                         "Error", "Invalid username", parent=self.root
@@ -141,7 +152,9 @@ class Login:
                     self.loginclear()
                     self.username.focus()
 
-                elif row is not None and bcrypt.checkpw(bytes(self.password.get(), 'utf-8'), bytes(row[0], 'utf-8')):
+                elif (row is not None and
+                      bcrypt.checkpw(bytes(self.password.get(), 'utf-8'),
+                                     bytes(row[0], 'utf-8'))):
                     cur.execute(
                         "insert into user_logins (username) values(%s)",
                         (

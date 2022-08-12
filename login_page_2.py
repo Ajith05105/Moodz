@@ -58,8 +58,8 @@ class Login:
         self.side_bar_resized = self.side_bar.resize((310, 750))
         self.new_side_bar = ImageTk.PhotoImage(self.side_bar_resized)
 
-        self.login = Image.open('img/login.png')
-        self.login_resized = self.login.resize((330, 115))
+        self.login_button = Image.open('img/login.png')
+        self.login_resized = self.login_button.resize((330, 115))
         self.new_login = ImageTk.PhotoImage(self.login_resized)
 
         label1 = Label(

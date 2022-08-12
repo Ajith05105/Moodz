@@ -1,12 +1,9 @@
 import datetime
 import sys
 import tkinter as tk
-from importlib import reload
 from tkinter import ttk
-
 import pymysql
 from PIL import ImageTk, Image
-
 from login_page_4 import *
 
 
@@ -25,17 +22,6 @@ class User_logs:
         self.y = 0
         self.user_logs()
 
-
-
-    # since there are multiple button in this page, I created this function to avoid duplication
-    def creating_button(self, command, imgLoc, h, w, x, y):
-        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
-        self.photoimg = ImageTk.PhotoImage(self.original)
-        button = Button(self.root, image=self.photoimg, bd=0, command=command, highlightthickness=0)
-        button.place(x=x, y=y)
-        self.images_list.append(self.photoimg)
-        return button
-
     # imports to login page
     def login_page(self):
         root.destroy()
@@ -46,7 +32,7 @@ class User_logs:
             del sys.modules[modulename]
             import login_page_5
 
-
+    # imports to entry page
     def entry_page(self):
         root.destroy()
         modulename = "index_3"
@@ -55,6 +41,21 @@ class User_logs:
         else:
             del sys.modules[modulename]
             import index_3
+
+    # since there are multiple button in this page,
+    # I created this function to avoid duplication
+    def creating_button(self, command, imgLoc, h, w, x, y):
+        # calling it all in one line
+        self.original = \
+            Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)
+        self.photoimg = ImageTk.PhotoImage(self.original)
+        button = Button(self.root,
+                        image=self.photoimg,
+                        bd=0, command=command,
+                        highlightthickness=0)
+        button.place(x=x, y=y)
+        self.images_list.append(self.photoimg)
+        return button
 
     # this function fetches all the entries from the user
     def fetching_info(self):
@@ -81,13 +82,13 @@ class User_logs:
             # this fetches all the entries from the current user from
             # entry info table.
             cur.execute(
-                "select emoji_id,entry_date,entry_time,UserId from entry_info where username = %s",
+                "select emoji_id,entry_date,entry_time,"
+                "UserId from entry_info where username = %s",
                 (self.username)
             )
             # this stores all entries from the current user
             self.rows = cur.fetchall()
             return self.rows
-
 
         except Exception as es:
             print(f"Error due to:{str(es)}")
@@ -118,9 +119,13 @@ class User_logs:
         self.awful_emoji_resized = self.awful_emoji.resize((75, 70))
         self.new_awful_emoji = ImageTk.PhotoImage(self.awful_emoji_resized)
 
-        # creating an array of lists, each list has an image and it correlating emoji.
-        self.emoji_images = [('none', 'none'), (self.new_great_emoji, 'Great'), (self.new_happy_emoji, 'Happy'),
-                             (self.new_meh_emoji, 'Meh'), (self.new_sad_emoji, 'Sad'),
+        # creating an array of lists, each list has an image,
+        # and it's correlating emoji.
+        self.emoji_images = [('none', 'none'),
+                             (self.new_great_emoji, 'Great'),
+                             (self.new_happy_emoji, 'Happy'),
+                             (self.new_meh_emoji, 'Meh'),
+                             (self.new_sad_emoji, 'Sad'),
                              (self.new_awful_emoji, 'Awful')]
 
         # calling fetching_info, so that i can access self.rows
@@ -136,22 +141,30 @@ class User_logs:
         self.title.place(x=115, y=15)
 
         wrapper2 = LabelFrame(root, highlightbackground='black')
-        wrapper3 = LabelFrame(root, highlightbackground='black', height=70, bg='#FEDC69')
+        wrapper3 = LabelFrame(root,
+                              highlightbackground='black',
+                              height=70,
+                              bg='#FEDC69')
 
         # creating a canvas is wrapper 2
         mycanvas = Canvas(wrapper2, bg='#FFFDD0', height=490, width=505)
         mycanvas.pack(side='left', fill=Y, )
 
         # placing a scrollbar in wrapper2
-        yscrollbar = ttk.Scrollbar(wrapper2, orient="vertical", command=mycanvas.yview)
+        yscrollbar = ttk.Scrollbar(wrapper2,
+                                   orient="vertical",
+                                   command=mycanvas.yview)
         yscrollbar.pack(side=RIGHT, fill="y")
 
         # setting up the scrollbar in the canvas
         mycanvas.configure(yscrollcommand=yscrollbar.set)
 
-        mycanvas.bind('<Configure>', lambda e: mycanvas.configure(scrollregion=mycanvas.bbox("all")))
+        mycanvas.bind('<Configure>',
+                      lambda e:
+                      mycanvas.configure(scrollregion=mycanvas.bbox("all")))
 
-        # this is the frame that goes in the canvas, and all the entries go inside this frame
+        # this is the frame that goes in the canvas,
+        # and all the entries go inside this frame
         self.myframe = Frame(mycanvas, bg='#FFFDD0')
         # creating the frame inside the canvas
         mycanvas.create_window((100, 3), window=self.myframe, anchor="nw")
@@ -178,6 +191,10 @@ class User_logs:
             self.entry_date = str(i[1])
             self.entry_time = str(i[2])
             self.user_id = i[3]
+            original_date_format = \
+                datetime.datetime.strptime(self.entry_date, "%Y-%m-%d")
+            original_time_format = \
+                datetime.datetime.strptime(self.entry_time, "%H:%M:%S")
 
             # This label goes back to the array that we previously defined
             # and if you can notice the array is arranged according to the
@@ -192,8 +209,8 @@ class User_logs:
             # This label prints the date and time
             tk.Label(
                 self.myframe,
-                text=f' {datetime.datetime.strptime(self.entry_date, "%Y-%m-%d").strftime("%A %d %b")} '
-                     f'  {datetime.datetime.strptime(self.entry_time, "%H:%M:%S").strftime("%I:%M %p")}',
+                text=f'   {original_date_format.strftime("%A %d %b")}'
+                     f'    {original_time_format.strftime("%I:%M %p")}',
                 bg='#FFFDD0',
                 fg="black",
                 borderwidth=3,

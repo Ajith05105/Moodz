@@ -1,8 +1,5 @@
-
 from tkinter import *
 from PIL import Image, ImageTk
-from importlib import reload
-
 
 
 def login_page():
@@ -13,7 +10,6 @@ def login_page():
 def sign_up():
     root.destroy()
     import register_page_6
-
 
 
 class main_page:
@@ -37,20 +33,21 @@ class main_page:
         self.sign_up_resized = self.sign_up.resize((300, 125))
         self.new_sign_up = ImageTk.PhotoImage(self.sign_up_resized)
         self.sign_up_button = Button(image=self.new_sign_up,
-                                     cursor='hand2', bg='white', borderwidth='0',
+                                     cursor='hand2',
+                                     bg='white',
+                                     borderwidth='0',
                                      command=sign_up)
         self.sign_up_button.place(x='130', y='415')
 
-        # login buttonf
+        # login button
 
         self.login = Image.open('img/login.png')
         self.login_resized = self.login.resize((410, 140))
         self.new_login = ImageTk.PhotoImage(self.login_resized)
-        self.login_button = Button(image=self.new_login, cursor='hand2'
-                                   , bg='white', borderwidth='0',
+        self.login_button = Button(image=self.new_login, cursor='hand2',
+                                   bg='white', borderwidth='0',
                                    command=login_page)
         self.login_button.place(x='85', y='535')
-
 
 
 root = Tk()
