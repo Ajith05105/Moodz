@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox, Entry
-from login_page_4 import Login as ln
+from main import *
 import bcrypt
 import pymysql
 import sys
@@ -33,10 +33,15 @@ class Login:
         logo = Label(self.root, image=self.logo, bd='0')
         logo.place(x=15, y=-15)
         # entry box for username
-        self.entry_img = ln.creating_image(self, 'entry_img', 50, 320, 50, 290)
+        self.entry_img = main_page.creating_image(self, 'entry_img',
+                                                  50, 320, 50, 290)
         # entry box for password
-        self.entry_img_2 = ln.creating_image(self, 'entry_img', 50, 320, 50,
-                                             390)
+        self.entry_img_2 = main_page.creating_image(self,
+                                                    'entry_img',
+                                                    50,
+                                                    320,
+                                                    50,
+                                                    390)
 
         # image for the login button
         self.login_img = Image.open('img/login.png')
@@ -44,8 +49,9 @@ class Login:
         self.new_login_img = ImageTk.PhotoImage(self.login_resized_img)
 
         # label for the side bar
-        self.side_bar = ln.creating_image(self, "side_bar_register_page",
-                                          750, 310, 390, 0)
+        self.side_bar = main_page.creating_image(self,
+                                                 "side_bar_register_page",
+                                                 750, 310, 390, 0)
 
         # label for the username text
         label2 = Label(

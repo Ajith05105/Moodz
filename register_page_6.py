@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
-from login_page_4 import Login as ln
+from main import *
 import email_validator
 import pymysql
 import bcrypt
@@ -35,21 +35,21 @@ class Register:
         # This places the logo
         Label(self.root, image=self.logo, bd='0').place(x=15, y=-15)
         # using the function defined in another page to avoid duplication
-        self.side_bar = ln.creating_image(self,
-                                          'side_bar_register_page',
-                                          750, 310, 390, 0)
+        self.side_bar = main_page.creating_image(self,
+                                                 'side_bar_register_page',
+                                                 750, 310, 390, 0)
         # creating the entry fields
-        self.entry_img = ln.creating_image(self, 'entry_img',
-                                           50, 320, 55, 360)
+        self.entry_img = main_page.creating_image(self, 'entry_img',
+                                                  50, 320, 55, 360)
 
-        self.entry_img_2 = ln.creating_image(self, 'entry_img', 50,
-                                             320, 55, 460)
+        self.entry_img_2 = main_page.creating_image(self, 'entry_img', 50,
+                                                    320, 55, 460)
 
-        self.entry_img_3 = ln.creating_image(self, 'entry_img', 50,
-                                             320, 55, 542)
+        self.entry_img_3 = main_page.creating_image(self, 'entry_img', 50,
+                                                    320, 55, 542)
 
-        self.entry_img_4 = ln.creating_image(self, 'entry_img', 50,
-                                             320, 55, 270)
+        self.entry_img_4 = main_page.creating_image(self, 'entry_img', 50,
+                                                    320, 55, 270)
 
         label2 = Label(
             self.root,

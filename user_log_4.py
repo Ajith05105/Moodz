@@ -3,8 +3,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 import pymysql
-from PIL import ImageTk, Image
-from login_page_4 import *
+from main import *
 
 
 # creating a class

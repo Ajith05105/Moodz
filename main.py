@@ -18,19 +18,7 @@ class main_page:
         self.root = root
         self.root.title('Moodz')
         self.root.geometry('550x700+500+0')
-
-        # This function is not used in this class but its used throughout
-        # the code, I am putting this function in this class because
-        # this is the main page and the user does not come back to this page.
-        # meaning i can use __name__ = "main" verification in this page.
-        def creating_image(self, imgLoc, h, w, x, y):
-            self.original = Image.open(f'img/{imgLoc}.png').resize((w, h),
-                                                                   Image.ANTIALIAS)  # calling it all in one line
-            self.photoimg = ImageTk.PhotoImage(self.original)
-            label = Label(self.root, image=self.photoimg, bd=0)
-            label.place(x=x, y=y)
-            self.images_list.append(self.photoimg)
-            return label
+        self.images_list = []
 
         # bg image
 
@@ -62,7 +50,21 @@ class main_page:
                                    command=login_page)
         self.login_button.place(x='85', y='535')
 
+    # This function is not used in this class but its used throughout
+    # the code, I am putting this function in this class because
+    # this is the main page and the user does not come back to this page.
+    # meaning i can use __name__ = "main" verification in this page.
+    def creating_image(self, imgLoc, h, w, x, y):
+        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h),
+                                                               Image.ANTIALIAS)
+        self.photoimg = ImageTk.PhotoImage(self.original)
+        label = Label(self.root, image=self.photoimg, bd=0)
+        label.place(x=x, y=y)
+        self.images_list.append(self.photoimg)
+        return label
 
-root = Tk()
-obj = main_page(root)
-root.mainloop()
+
+if __name__ == "__main__":
+    root = Tk()
+    obj = main_page(root)
+    root.mainloop()

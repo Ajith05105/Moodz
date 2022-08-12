@@ -1,4 +1,4 @@
-from login_page_4 import *
+from main import *
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
@@ -48,10 +48,10 @@ class Appscreen:
 
         # emoji bar, and Login function is from another file,
         # avoiding duplication of code
-        Login.creating_image(self, 'emoji_bar', 300, 560, 0, 390)
+        main_page.creating_image(self, 'emoji_bar', 300, 560, 0, 390)
 
         # calendar icon
-        Login.creating_image(self, 'img_1', 40, 40, 110, 122)
+        main_page.creating_image(self, 'img_1', 40, 40, 110, 122)
         # feeling great emoji
         self.great_emoji = Image.open('img/great_emoji.png')
         self.great_emoji_resized = self.great_emoji.resize((75, 70))
