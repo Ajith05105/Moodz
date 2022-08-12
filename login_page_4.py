@@ -24,13 +24,7 @@ class Login:
 
         self.loginform()
 
-    def creating_image(self, imgLoc, h, w, x, y):
-        self.original = Image.open(f'img/{imgLoc}.png').resize((w, h), Image.ANTIALIAS)  # calling it all in one line
-        self.photoimg = ImageTk.PhotoImage(self.original)
-        label = Label(self.root, image=self.photoimg, bd=0)
-        label.place(x=x, y=y)
-        self.images_list.append(self.photoimg)
-        return label
+
 
     def loginform(self):
 

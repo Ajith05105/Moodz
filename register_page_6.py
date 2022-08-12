@@ -172,13 +172,12 @@ class Register:
                 # increase the strength
             elif len(self.password.get()) < 6:
                 messagebox.showerror("Error",
-                                     "password must be at least 6 letters long",
+                                     "password must be at least 6 "
+                                     "letters long",
                                      parent=self.root)
 
                 # checking that the password = confirm password
             elif self.password.get() == self.confirm_pswd.get():
-
-
                 con = pymysql.connect(
                     host="sql6.freemysqlhosting.net",
                     user="sql6509714",
@@ -239,9 +238,9 @@ class Register:
 
             else:
                 messagebox.showerror(
-                    "Error", f"password and "
-                             f"confirm password dont match"
-                    , parent=self.root)
+                    "Error", "password and "
+                             "confirm password dont match",
+                    parent=self.root)
 
         except Exception as es:
             messagebox.showerror(
